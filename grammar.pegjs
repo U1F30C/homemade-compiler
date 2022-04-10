@@ -84,13 +84,13 @@ ifStatement = "if" __ "(" __ expression:expression __ ")" __ block:block { retur
 
 loopStatement = "while" __ "(" __ expression:expression __ ")" __ block:block { return { type: "loop", expression, block } }
 
-function = "function" __ identifier:identifier __ "(" __ paramsDeclaration:paramsDeclaration __ ")" __ block { return { type: "function", identifier, paramsDeclaration } }
+function = "function" __ identifier:identifier __ "(" __ paramsDeclaration:paramsDeclaration __ ")" __ block { return { type: "function", identifier, paramsDeclaration, block } }
 
 paramsDeclaration = head:paramDeclaration __ "," __ tail:paramsDeclaration { return parseParams(head, tail) }
     / head:paramDeclaration { return parseParams(head, null) }
     / "" { return [] }
 
-paramDeclaration = identifier:identifier { return { type:"param", identifier } }
+paramDeclaration = identifier:identifier { return { type:"paramDeclaration", identifier } }
 
 block = "{" __ statements:statements __ "}" { return statements }
 

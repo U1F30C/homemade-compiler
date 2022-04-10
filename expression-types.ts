@@ -1,5 +1,20 @@
 export type ParserResult = Element[];
-export type Element = Statement | Function;
+export type Element = Statement | FunctionDeclaration;
+
+export class FunctionDeclaration {
+  type: "function";
+  identifier: Identifier;
+  paramsDeclaration: ParamsDeclaration;
+  block: Block;
+}
+
+export type ParamsDeclaration = ParamDeclaration[];
+
+export class ParamDeclaration {
+  type: "paramDeclaration";
+  identifier: Identifier;
+}
+
 export type Statement =
   | Declaration
   | Assignment
