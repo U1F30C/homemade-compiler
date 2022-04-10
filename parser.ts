@@ -1,5 +1,5 @@
-const peg = require("pegjs");
-const fs = require("fs");
+import peg from "pegjs";
+import fs from "fs";
 const grammar = fs.readFileSync("grammar.pegjs", "utf8");
 
 function main() {
@@ -24,7 +24,7 @@ function main() {
       startRule: "program"
     });
 
-    console.log(JSON.stringify(result, 0, 2));
+    console.log(JSON.stringify(result, null, 2));
   } catch (error) {
     console.log(error);
     // console.log(JSON.stringify(error, void 0, 2));
