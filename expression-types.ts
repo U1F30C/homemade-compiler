@@ -5,6 +5,7 @@ export class FunctionDeclaration {
   type: "function";
   identifier: Identifier;
   paramsDeclaration: ParamsDeclaration;
+  typeIdentifier: Type;
   block: Block;
 }
 
@@ -13,6 +14,7 @@ export type ParamsDeclaration = ParamDeclaration[];
 export class ParamDeclaration {
   type: "paramDeclaration";
   identifier: Identifier;
+  typeIdentifier: Type;
 }
 
 export type Statement =
@@ -28,7 +30,14 @@ export class Assignment {
   expression: Expression;
 }
 
-export class Declaration extends Assignment {}
+export class Declaration {
+  type: "declaration";
+  identifier: Identifier;
+  typeIdentifier: Type;
+  expression?: Expression;
+}
+
+export type Type = "string" | "number" | "boolean" | "void" | "unknown";
 
 export class IfStatement {
   type: "if";
@@ -57,13 +66,13 @@ export class Expression {
   right?: Expression;
 }
 
-export type SingleExpression =
-  | PrimaryExpression
-  | {
-      type: "unary";
-      operator: UnaryOperator;
-      expression: Expression;
-    };
+export class UnaryExpression {
+  type: "unary";
+  operator: UnaryOperator;
+  expression: Expression;
+}
+
+export type SingleExpression = PrimaryExpression | UnaryExpression;
 
 export type PrimaryExpression =
   | Constant

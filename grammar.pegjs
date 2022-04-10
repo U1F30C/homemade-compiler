@@ -27,7 +27,10 @@ statement = statement:declaration _ statementSeparator { return statement }
     / statement:functionCall { return statement }
     / "" __ statementSeparator { return "" }
 
-declaration = assignment:assignment
+declaration = "let" _ identifier:identifier _ ":" _ typeIdentifier:type _ "=" _ expression:expression { return { type: "declaration", identifier, expression, typeIdentifier } } /
+    "let" _ identifier:identifier _ ":" _ typeIdentifier:type { return { type: "declaration", identifier, typeIdentifier } }
+
+type = "number" / "string" / "boolean" / "void"
 
 assignment = identifier:identifier __ "=" __ expression:expression { return { type: "assignment", identifier, expression } }
 
@@ -84,13 +87,13 @@ ifStatement = "if" __ "(" __ expression:expression __ ")" __ block:block { retur
 
 loopStatement = "while" __ "(" __ expression:expression __ ")" __ block:block { return { type: "loop", expression, block } }
 
-function = "function" __ identifier:identifier __ "(" __ paramsDeclaration:paramsDeclaration __ ")" __ block { return { type: "function", identifier, paramsDeclaration, block } }
+function = "function" __ identifier:identifier __ "(" __ paramsDeclaration:paramsDeclaration __ ")" _ ":" typeIdentifier:type __ block { return { type: "function", identifier, paramsDeclaration, block, typeIdentifier } }
 
 paramsDeclaration = head:paramDeclaration __ "," __ tail:paramsDeclaration { return parseParams(head, tail) }
     / head:paramDeclaration { return parseParams(head, null) }
     / "" { return [] }
 
-paramDeclaration = identifier:identifier { return { type:"paramDeclaration", identifier } }
+paramDeclaration = identifier:identifier _ ":" _ typeIdentifier:type { return { type:"paramDeclaration", identifier, typeIdentifier } }
 
 block = "{" __ statements:statements __ "}" { return statements }
 
