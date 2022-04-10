@@ -40,7 +40,7 @@ singleExpression = primaryExpression
     / operator:unaryOperator __ expression:expression { return { type: "unary", operator, expression } }
 
 primaryExpression = constant
-    / identifier:identifier { return { type: "identifier", identifier } }
+    / identifier
     / functionCall
     / "(" _ expression:expression _ ")" { return expression }
 
@@ -82,7 +82,7 @@ binaryOperator = "**" / "*" / "/" / "%" / "+" / "-"
 
 ifStatement = "if" __ "(" __ expression:expression __ ")" __ block:block { return { type: "if", expression, block } }
 
-loopStatement = "while" __ "(" __ expression:expression __ ")" __ block:block { return { type: "while", expression, block } }
+loopStatement = "while" __ "(" __ expression:expression __ ")" __ block:block { return { type: "loop", expression, block } }
 
 function = "function" __ identifier:identifier __ "(" __ paramsDeclaration:paramsDeclaration __ ")" __ block { return { type: "function", identifier, paramsDeclaration } }
 
@@ -103,6 +103,6 @@ _ = [ \t]*
 
 statementSeparator = [;\n\r]
 
-identifier = head:(identifierAtom / "_") tail:(identifierAtom)* { return head + tail.join("") }
+identifier = head:(identifierAtom / "_") tail:(identifierAtom)* { return { type: "identifier", "identifier": head + tail.join("") } }
 identifierAtom = characters:[A-Za-z0-9_]
 
