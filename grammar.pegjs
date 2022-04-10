@@ -14,7 +14,7 @@
 
 program = elements:elements { return elements }
 
-elements = __ head:element __ tail:elements __ { return flattenList(head, tail)}
+elements = __ head:element __ tail:elements __ { return flattenList(head, tail) }
     / ""
 
 element = statement
@@ -29,9 +29,9 @@ statement = statement:declaration _ statementSeparator { return statement }
 
 declaration = assignment:assignment
 
-assignment = identifier:identifier __ "=" __ expression:expression { return { type: "assignment", identifier, expression} }
+assignment = identifier:identifier __ "=" __ expression:expression { return { type: "assignment", identifier, expression } }
 
-expression = left:singleExpression __ right:_expression { return { left, ...right } }
+expression = left:singleExpression __ right:_expression { return { type: "expression", left, ...right } }
 
 _expression = operator:binaryOperator __ right:expression { return { operator, right } }
     / ""

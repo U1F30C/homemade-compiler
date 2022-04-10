@@ -51,6 +51,7 @@ export class FunctionCall {
 export type Params = Param[];
 
 export class Expression {
+  type: "expression";
   left: SingleExpression;
   operator?: BinaryOperator;
   right?: Expression;
