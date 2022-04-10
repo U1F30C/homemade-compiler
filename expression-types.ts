@@ -75,7 +75,7 @@ export type Constant =
   | { type: "string"; value: string }
   | { type: "number"; value: number }
   | { type: "boolean"; value: boolean }
-  | { type: null; value: null };
+  | { type: "null"; value: null };
 
 export type BinaryOperator =
   | "**"
