@@ -37,7 +37,13 @@ export class Declaration {
   expression?: Expression;
 }
 
-export type Type = "string" | "number" | "boolean" | "void" | "unknown";
+export enum Type {
+  "string" = "string",
+  "number" = "number",
+  "boolean" = "boolean",
+  "void" = "void",
+  "unknown" = "unknown",
+}
 
 export class IfStatement {
   type: "if";

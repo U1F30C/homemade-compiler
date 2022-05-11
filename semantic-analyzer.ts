@@ -241,40 +241,40 @@ function analyzeSemanticsOfExpression(
           "Cannot use arithmetic comparison operator on mismatching types"
         );
       } else {
-        return { assignedType: "boolean" };
+        return { assignedType: Type.boolean };
       }
     }
 
     if (["&&", "||"].includes(operator)) {
       if (
         leftExpressionType.assignedType != rightExpressionType.assignedType ||
-        leftExpressionType.assignedType != "boolean"
+        leftExpressionType.assignedType != Type.boolean
       ) {
         throw new Error("Cannot use logical operator on non boolean values");
       } else {
-        return { assignedType: "boolean" };
+        return { assignedType: Type.boolean };
       }
     }
   }
-  return { assignedType: "unknown" };
+  return { assignedType: Type.unknown };
 }
 
 function analyzeSemanticsOfSingleExpression(
   element: SingleExpression,
   parentSymbolTable: SymbolTableType
 ): SymbolWithType {
-  let expressionType: Type = "unknown";
+  let expressionType: Type = Type.unknown;
   switch (element.type) {
     case "string": {
-      expressionType = "string";
+      expressionType = Type.string;
       break;
     }
     case "number": {
-      expressionType = "number";
+      expressionType = Type.number;
       break;
     }
     case "boolean": {
-      expressionType = "boolean";
+      expressionType = Type.boolean;
       break;
     }
     // case "null": {
@@ -328,14 +328,14 @@ function analyzeSemanticsOfUnaryExpression(
       throw new Error(
         `Cannot apply operator ${operator} to expression of type ${expressionType}`
       );
-    return { assignedType: "number" };
+    return { assignedType: Type.number };
   }
   if (["!"].includes(operator)) {
     if (expressionType != "boolean")
       throw new Error(
         `Cannot apply operator ${operator} to expression of type ${expressionType}`
       );
-    return { assignedType: "number" };
+    return { assignedType: Type.number };
   }
   throw new Error("Unknown error");
 }
