@@ -14,21 +14,22 @@ import {
   BinaryOperator,
 } from "./expression-types";
 
-interface SymbolWithType {
+export interface SymbolWithType {
   assignedType: Type;
 }
 
-interface ProgramSymbol extends SymbolWithType {
+export interface ProgramSymbol extends SymbolWithType {
   type: "function" | "paramDeclaration" | "declaration";
   assignedType: Type;
   paramsDeclaration?: SymbolWithType[];
 }
 
-type SymbolTableType = { [key: string]: ProgramSymbol };
+export type SymbolTableType = { [key: string]: ProgramSymbol };
 
 function validateNotDuplicate(symbolTable: SymbolTableType, symbol: string) {
   if (symbolTable[symbol]) throw new Error(`Duplicate identifier: "${symbol}"`);
 }
+
 function validateExists(symbolTable: SymbolTableType, symbol: string) {
   if (!symbolTable[symbol])
     throw new Error(`Identifier not found: "${symbol}"`);
